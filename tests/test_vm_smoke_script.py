@@ -82,6 +82,27 @@ def test_vm_smoke_script_has_bounded_observation_and_evidence() -> None:
     assert 'Get-ChildItem -LiteralPath $sessionRoot -Recurse -File -Filter "VBox.log*"' in script
 
 
+def test_process_output_is_drained_asynchronously_before_wait_for_exit() -> None:
+    script = _script()
+
+    for function_name, next_function_name in (
+        ("Invoke-VBoxManage", "Invoke-Python"),
+        ("Invoke-Python", "ConvertFrom-MachineReadableInfo"),
+    ):
+        body = script.split(f"function {function_name} {{", 1)[1].split(
+            f"function {next_function_name} {{", 1
+        )[0]
+        wait = body.index("if (-not $process.WaitForExit(")
+        stdout_start = body.index("$standardOutputTask = $process.StandardOutput.ReadToEndAsync()")
+        stderr_start = body.index("$standardErrorTask = $process.StandardError.ReadToEndAsync()")
+        stdout_finish = body.index("$standardOutputTask.GetAwaiter().GetResult()")
+        stderr_finish = body.index("$standardErrorTask.GetAwaiter().GetResult()")
+
+        assert stdout_start < wait < stdout_finish
+        assert stderr_start < wait < stderr_finish
+        assert "$process.StandardOutput.ReadToEnd()" not in body
+        assert "$process.StandardError.ReadToEnd()" not in body
+
 def test_vm_smoke_cleanup_is_scoped_and_identity_checked() -> None:
     script = _script()
 
