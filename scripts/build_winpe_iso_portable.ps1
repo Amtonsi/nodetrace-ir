@@ -300,7 +300,7 @@ function Assert-WinPEProvenance {
             CabName = "690b8ac88bc08254d351654d56805aea.cab"
             CabSize = 199404031L
             CabSha1 = "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"
-            CabSha256 = $null
+            CabSha256 = "BFBEF5062372192C42D3833BE0AB99A9C197B4271D7B47D76F299C57DD6FA071"
             Member = "fil642ac1bd3326d4b59398fe460db370b9"
             MsiFileHash = @(-721854461, 650304993, 1499151182, 1220197130)
         }
@@ -376,12 +376,7 @@ function Assert-WinPEProvenance {
         Assert-ExactManifestValue $payload.cab.name $expected.CabName "$($expected.Role) CAB name"
         Assert-ExactManifestValue $payload.cab.size $expected.CabSize "$($expected.Role) CAB size"
         Assert-ExactManifestValue $payload.cab.sha1 $expected.CabSha1 "$($expected.Role) CAB SHA-1" -IgnoreCase
-        if ($null -ne $expected.CabSha256) {
-            Assert-ExactManifestValue $payload.cab.sha256 $expected.CabSha256 "$($expected.Role) CAB SHA-256" -IgnoreCase
-        }
-        elseif ([string]$payload.cab.sha256 -notmatch "^[0-9A-Fa-f]{64}$") {
-            throw "WinPE provenance has no valid SHA-256 for the x86 boot WIM CAB."
-        }
+        Assert-ExactManifestValue $payload.cab.sha256 $expected.CabSha256 "$($expected.Role) CAB SHA-256" -IgnoreCase
         Assert-ExactManifestValue $payload.member.cab_member $expected.Member "$($expected.Role) CAB member"
         Assert-ExactManifestValue $payload.member.path $expected.Path "$($expected.Role) output path"
         $actualMsiFileHash = @($payload.member.msi_file_hash | ForEach-Object { [int]$_ }) -join ","
