@@ -221,6 +221,8 @@ function Invoke-VBoxManage {
     if (-not $process.Start()) {
         throw "VBoxManage could not be started."
     }
+    $standardOutputTask = $process.StandardOutput.ReadToEndAsync()
+    $standardErrorTask = $process.StandardError.ReadToEndAsync()
     if (-not $process.WaitForExit($CommandTimeoutSeconds * 1000)) {
         try {
             $process.Kill()
@@ -231,8 +233,8 @@ function Invoke-VBoxManage {
         throw "VBoxManage exceeded the per-command timeout of $CommandTimeoutSeconds seconds."
     }
 
-    $standardOutput = $process.StandardOutput.ReadToEnd()
-    $standardError = $process.StandardError.ReadToEnd()
+    $standardOutput = $standardOutputTask.GetAwaiter().GetResult()
+    $standardError = $standardErrorTask.GetAwaiter().GetResult()
     $exitCode = $process.ExitCode
     $process.Dispose()
 
@@ -275,6 +277,8 @@ function Invoke-Python {
     if (-not $process.Start()) {
         throw "Python could not be started."
     }
+    $standardOutputTask = $process.StandardOutput.ReadToEndAsync()
+    $standardErrorTask = $process.StandardError.ReadToEndAsync()
     if (-not $process.WaitForExit($CommandTimeoutSeconds * 1000)) {
         try {
             $process.Kill()
@@ -285,8 +289,8 @@ function Invoke-Python {
         throw "Python exceeded the per-command timeout of $CommandTimeoutSeconds seconds."
     }
 
-    $standardOutput = $process.StandardOutput.ReadToEnd()
-    $standardError = $process.StandardError.ReadToEnd()
+    $standardOutput = $standardOutputTask.GetAwaiter().GetResult()
+    $standardError = $standardErrorTask.GetAwaiter().GetResult()
     $exitCode = $process.ExitCode
     $process.Dispose()
     if (-not [string]::IsNullOrWhiteSpace($standardOutput)) {
