@@ -24,6 +24,8 @@ $MszipExtractor = Join-Path $PSScriptRoot "extract_mszip_ranges.py"
 $FatExtractor = Join-Path $PSScriptRoot "extract_fat12_file.py"
 $WinPEBaseUrl = "https://download.microsoft.com/download/058b9477-7235-48ec-a700-73c5ccf9c286/adkwinpeaddons/Installers/"
 $AdkBaseUrl = "https://download.microsoft.com/download/3b40cb81-ff9c-4322-aacd-c78d01b2c2ed/adk/Installers/"
+$PinnedWimCabSha1 = "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"
+$PinnedWimCabSha256 = "BFBEF5062372192C42D3833BE0AB99A9C197B4271D7B47D76F299C57DD6FA071"
 
 function Get-FullPath {
     param([Parameter(Mandatory = $true)][string]$Path)
@@ -194,8 +196,9 @@ $deploymentMsi = Resolve-PinnedPayload `
     "Windows Deployment Tools-x86_en-us.msi" 626688 "SHA256" `
     "5DA7A3F65E6364735FBCEB08357773387D2B035B0073BA0BBC19A76A548C95B2"
 $wimCab = Resolve-PinnedPayload `
-    "690b8ac88bc08254d351654d56805aea.cab" 199404031 "SHA1" `
-    "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"
+    "690b8ac88bc08254d351654d56805aea.cab" 199404031 "SHA256" `
+    $PinnedWimCabSha256
+Assert-FileIdentity $wimCab 199404031 "SHA1" $PinnedWimCabSha1
 $bootCab = Resolve-PinnedPayload `
     "aa25d18a5fcce134b0b89fb003ec99ff.cab" 1817033 "SHA256" `
     "4C0A16C542DC232D1476BB1778B6AB16BB9BBF42EEC87F6A7688132142D4FA6A"
@@ -315,7 +318,8 @@ function New-SignedFileProvenance {
     }
 }
 
-$wimCabSha256 = (Get-FileHash -LiteralPath $wimCab -Algorithm SHA256).Hash
+Assert-FileIdentity $wimCab 199404031 "SHA1" $PinnedWimCabSha1
+Assert-FileIdentity $wimCab 199404031 "SHA256" $PinnedWimCabSha256
 $manifest = [ordered]@{
     schema = "nodetrace-winpe-extraction/v1"
     source = "Microsoft Windows PE add-on 10.1.19041.5856"
@@ -334,8 +338,8 @@ $manifest = [ordered]@{
                 cab = [ordered]@{
                     name = "690b8ac88bc08254d351654d56805aea.cab"
                     size = 199404031L
-                    sha1 = "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"
-                    sha256 = $wimCabSha256
+                    sha1 = $PinnedWimCabSha1
+                    sha256 = $PinnedWimCabSha256
                 }
                 member = [ordered]@{
                     cab_member = "fil642ac1bd3326d4b59398fe460db370b9"
@@ -421,4 +425,4 @@ $manifestPath = Join-Path $OutputRoot "extraction-manifest.json"
 )
 Write-Host "Prepared verified portable x86 WinPE inputs: $OutputRoot" -ForegroundColor Green
 Write-Host "Manifest: $manifestPath"
-Write-Host "WIM CAB SHA-256: $wimCabSha256"
+Write-Host "WIM CAB SHA-256: $PinnedWimCabSha256"
