@@ -1093,6 +1093,7 @@ try {
     $verifyArguments = [Collections.Generic.List[string]]::new()
     $verifyArguments.Add($isoVerifier)
     $verifyArguments.Add($outputFull)
+    $verifyArguments.Add("--require-udf-nsr02")
     foreach ($expectedPath in $expectedIsoPaths) {
         $verifyArguments.Add("--expect-path")
         $verifyArguments.Add($expectedPath)
