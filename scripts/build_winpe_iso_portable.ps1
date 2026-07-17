@@ -985,6 +985,9 @@ try {
         "efi_el_torito_source=$(if ($null -ne $efiBootImageFull) { 'official-winpe-extraction' } else { 'deterministic-fat12-fallback' })",
         "wimlib_sha256=$wimlibHash",
         "wimlib_version=$wimlibVersion",
+        "oscdimg_sha256=$oscdimgHash",
+        "oscdimg_version=$oscdimgVersion",
+        "iso_filesystem=udf-1.02-with-iso9660-bridge",
         "avz_execution=enabled"
     )
     [IO.File]::WriteAllLines(
@@ -1061,30 +1064,31 @@ try {
     }
 
     New-Item -ItemType Directory -Path ([IO.Path]::GetDirectoryName($outputFull)) -Force | Out-Null
-    Invoke-Checked $Python @(
-            "--staging",
+    $oscdimgTimestamp = ([DateTimeOffset]::FromUnixTimeSeconds($SourceDateEpoch)).UtcDateTime.ToString(
+        "MM/dd/yyyy,HH:mm:ss",
+        [Globalization.CultureInfo]::InvariantCulture
+    )
+    Invoke-Checked $oscdimgFull @(
+        "-m",
+        "-o",
+        "-u1",
+        "-udfver102",
+        "-l$VolumeLabel",
+        "-t$oscdimgTimestamp",
+        "-bootdata:2#p0,e,b$stagedBiosBoot#pEF,e,b$stagedEfiImage",
         $stagingRoot,
-        "--output",
-        $outputFull,
-        "--volume-label",
-        $VolumeLabel,
-        "--bios-boot-image",
-        "NodeTraceBoot/etfsboot.com",
-        "--efi-boot-image",
-        "NodeTraceBoot/efisys.bin",
-        "--source-date-epoch",
-        [string]$SourceDateEpoch
-    ) "Building the hybrid BIOS/IA32-UEFI ISO"
+        $outputFull
+    ) "Building the UDF 1.02 BIOS/IA32-UEFI ISO with Microsoft oscdimg"
 
     $expectedIsoPaths = @(
-        "bootmgr",
-        "Boot/BCD",
-        "Boot/boot.sdi",
-        "EFI/Boot/bootia32.efi",
-        "EFI/Microsoft/Boot/BCD",
-        "sources/boot.wim",
-        "NodeTraceBoot/etfsboot.com",
-        "NodeTraceBoot/efisys.bin"
+        "BOOTMGR",
+        "BOOT/BCD",
+        "BOOT/BOOT.SDI",
+        "EFI/BOOT/BOOTIA32.EFI",
+        "EFI/MICROSOF/BOOT/BCD",
+        "SOURCES/BOOT.WIM",
+        "NODETRAC/ETFSBOOT.COM",
+        "NODETRAC/EFISYS.BIN"
     )
     $verifyArguments = [Collections.Generic.List[string]]::new()
     $verifyArguments.Add($isoVerifier)
@@ -1121,7 +1125,8 @@ try {
         [pscustomobject]@{ Path = $bootIa32Full; Hash = $bootIa32Hash; Description = "bootia32.efi" },
         [pscustomobject]@{ Path = $bootManagerFull; Hash = $bootManagerHash; Description = "bootmgr" },
         [pscustomobject]@{ Path = $biosBootFull; Hash = $biosBootHash; Description = "etfsboot.com" },
-        [pscustomobject]@{ Path = $wimlibFull; Hash = $wimlibHash; Description = "wimlib-imagex.exe" }
+        [pscustomobject]@{ Path = $wimlibFull; Hash = $wimlibHash; Description = "wimlib-imagex.exe" },
+        [pscustomobject]@{ Path = $oscdimgFull; Hash = $oscdimgHash; Description = "oscdimg.exe" }
     )) {
         Assert-UnchangedFileHash $inputState.Path $inputState.Hash $inputState.Description
     }
