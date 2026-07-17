@@ -93,6 +93,14 @@ def _terminator() -> bytes:
     return bytes(descriptor)
 
 
+def _udf_vrs_descriptor(identifier: bytes) -> bytes:
+    assert len(identifier) == 5
+    descriptor = bytearray(SECTOR_SIZE)
+    descriptor[0] = 0
+    descriptor[1:6] = identifier
+    descriptor[6] = 1
+    return bytes(descriptor)
+
 def _validation(platform: int = 0) -> bytes:
     validation = bytearray(32)
     validation[0] = 1
@@ -118,46 +126,59 @@ def _root_directory(extent: int, file_identifier: bytes) -> bytes:
     records = [
         _directory_record(extent, SECTOR_SIZE, b"\x00", directory=True),
         _directory_record(extent, SECTOR_SIZE, b"\x01", directory=True),
-        _directory_record(25, 2, file_identifier, directory=False),
+        _directory_record(28, 2, file_identifier, directory=False),
     ]
     return b"".join(records).ljust(SECTOR_SIZE, b"\x00")
 
 
-def _synthetic_iso(path: Path, *, efi: bool = False, boot_record: bool = True) -> Path:
+def _synthetic_iso(
+    path: Path,
+    *,
+    efi: bool = False,
+    boot_record: bool = True,
+    udf_nsr02: bool = True,
+) -> Path:
     sectors = 32
     image = bytearray(sectors * SECTOR_SIZE)
     image[16 * SECTOR_SIZE : 17 * SECTOR_SIZE] = _volume_descriptor(
-        1, sectors, 23, joliet=False
+        1, sectors, 26, joliet=False
     )
     if boot_record:
-        image[17 * SECTOR_SIZE : 18 * SECTOR_SIZE] = _boot_record(20)
+        image[17 * SECTOR_SIZE : 18 * SECTOR_SIZE] = _boot_record(23)
     else:
         image[17 * SECTOR_SIZE : 18 * SECTOR_SIZE] = bytes(
             [2]
         ) + b"CD001\x01" + bytes(SECTOR_SIZE - 7)
-    supplementary = bytearray(_volume_descriptor(2, sectors, 24, joliet=True))
+    supplementary = bytearray(_volume_descriptor(2, sectors, 27, joliet=True))
     image[18 * SECTOR_SIZE : 19 * SECTOR_SIZE] = supplementary
     image[19 * SECTOR_SIZE : 20 * SECTOR_SIZE] = _terminator()
+    if udf_nsr02:
+        for sector_number, identifier in zip(
+            range(20, 23), (b"BEA01", b"NSR02", b"TEA01")
+        ):
+            image[
+                sector_number * SECTOR_SIZE : (sector_number + 1) * SECTOR_SIZE
+            ] = _udf_vrs_descriptor(identifier)
 
     catalog = bytearray(SECTOR_SIZE)
     catalog[0:32] = _validation()
-    catalog[32:64] = _boot_entry(21)
+    catalog[32:64] = _boot_entry(24)
     if efi:
         catalog[64] = 0x91
         catalog[65] = 0xEF
         struct.pack_into("<H", catalog, 66, 1)
         catalog[68:96] = b"UEFI".ljust(28, b" ")
-        catalog[96:128] = _boot_entry(22)
-    image[20 * SECTOR_SIZE : 21 * SECTOR_SIZE] = catalog
-    image[21 * SECTOR_SIZE : 22 * SECTOR_SIZE] = b"BIOS".ljust(SECTOR_SIZE, b"\x00")
-    image[22 * SECTOR_SIZE : 23 * SECTOR_SIZE] = b"UEFI".ljust(SECTOR_SIZE, b"\x00")
-    image[23 * SECTOR_SIZE : 24 * SECTOR_SIZE] = _root_directory(
-        23, b"NODETRAC.EX;1"
+        catalog[96:128] = _boot_entry(25)
+    image[23 * SECTOR_SIZE : 24 * SECTOR_SIZE] = catalog
+    image[24 * SECTOR_SIZE : 25 * SECTOR_SIZE] = b"BIOS".ljust(SECTOR_SIZE, b"\x00")
+    image[25 * SECTOR_SIZE : 26 * SECTOR_SIZE] = b"UEFI".ljust(SECTOR_SIZE, b"\x00")
+    image[26 * SECTOR_SIZE : 27 * SECTOR_SIZE] = _root_directory(
+        26, b"NODETRAC.EX;1"
     )
-    image[24 * SECTOR_SIZE : 25 * SECTOR_SIZE] = _root_directory(
-        24, "NodeTraceIR.exe".encode("utf-16-be")
+    image[27 * SECTOR_SIZE : 28 * SECTOR_SIZE] = _root_directory(
+        27, "NodeTraceIR.exe".encode("utf-16-be")
     )
-    image[25 * SECTOR_SIZE : 25 * SECTOR_SIZE + 2] = b"MZ"
+    image[28 * SECTOR_SIZE : 28 * SECTOR_SIZE + 2] = b"MZ"
     path.write_bytes(image)
     return path
 
@@ -166,14 +187,24 @@ def test_verifier_accepts_hybrid_bios_uefi_and_joliet_path(tmp_path: Path) -> No
     verifier = _load_verifier()
     image = _synthetic_iso(tmp_path / "hybrid.iso", efi=True)
 
-    report = verifier.verify_iso(image, ["/NodeTraceIR.exe"])
+    report = verifier.verify_iso(
+        image, ["/NodeTraceIR.exe"], require_udf_nsr02=True
+    )
 
     assert report["valid"] is True
     assert report["boot_modes"] == ["BIOS", "UEFI"]
     assert report["image"]["size"] == image.stat().st_size
     assert report["image"]["sha256"] == hashlib.sha256(image.read_bytes()).hexdigest()
     assert report["iso9660"]["has_joliet"] is True
-    assert report["el_torito"]["catalog_lba"] == 20
+    assert report["udf_nsr02"] == {
+        "start_sector": 20,
+        "descriptors": [
+            {"identifier": "BEA01", "sector": 20},
+            {"identifier": "NSR02", "sector": 21},
+            {"identifier": "TEA01", "sector": 22},
+        ],
+    }
+    assert report["el_torito"]["catalog_lba"] == 23
     assert [entry["platform"] for entry in report["el_torito"]["entries"]] == [
         "BIOS",
         "UEFI",
@@ -203,7 +234,7 @@ def test_verifier_rejects_bad_catalog_checksum(tmp_path: Path) -> None:
     verifier = _load_verifier()
     image = _synthetic_iso(tmp_path / "bad-checksum.iso")
     data = bytearray(image.read_bytes())
-    data[20 * SECTOR_SIZE + 4] ^= 0x01
+    data[23 * SECTOR_SIZE + 4] ^= 0x01
     image.write_bytes(data)
 
     report = verifier.verify_iso(image)
@@ -216,7 +247,7 @@ def test_verifier_rejects_boot_image_outside_volume(tmp_path: Path) -> None:
     verifier = _load_verifier()
     image = _synthetic_iso(tmp_path / "bad-lba.iso")
     data = bytearray(image.read_bytes())
-    struct.pack_into("<I", data, 20 * SECTOR_SIZE + 32 + 8, 99)
+    struct.pack_into("<I", data, 23 * SECTOR_SIZE + 32 + 8, 99)
     image.write_bytes(data)
 
     report = verifier.verify_iso(image)
@@ -225,6 +256,23 @@ def test_verifier_rejects_boot_image_outside_volume(tmp_path: Path) -> None:
     assert report["boot_modes"] == []
     assert any("outside the declared ISO volume" in error for error in report["errors"])
 
+
+def test_verifier_rejects_each_invalid_udf_nsr02_descriptor(tmp_path: Path) -> None:
+    verifier = _load_verifier()
+
+    for offset, identifier in enumerate(("BEA01", "NSR02", "TEA01")):
+        image = _synthetic_iso(tmp_path / f"bad-{identifier}.iso")
+        data = bytearray(image.read_bytes())
+        data[(20 + offset) * SECTOR_SIZE + 1] ^= 0x01
+        image.write_bytes(data)
+
+        report = verifier.verify_iso(image, require_udf_nsr02=True)
+
+        assert report["valid"] is False
+        assert any(
+            f"requires {identifier} at sector {20 + offset}" in error
+            for error in report["errors"]
+        )
 
 def test_cli_prints_json_and_fails_for_missing_expected_path(tmp_path: Path) -> None:
     image = _synthetic_iso(tmp_path / "bios.iso")
@@ -250,3 +298,28 @@ def test_cli_prints_json_and_fails_for_missing_expected_path(tmp_path: Path) -> 
     assert report["boot_modes"] == ["BIOS"]
     assert report["expected_paths"][0]["found"] is False
     assert any("Expected ISO path not found" in error for error in report["errors"])
+
+def test_cli_requires_udf_nsr02_sequence(tmp_path: Path) -> None:
+    image = _synthetic_iso(tmp_path / "no-udf.iso", udf_nsr02=False)
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(VERIFIER_PATH),
+            str(image),
+            "--require-udf-nsr02",
+            "--compact",
+        ],
+        capture_output=True,
+        text=True,
+        timeout=20,
+        check=False,
+    )
+
+    report = json.loads(result.stdout)
+    assert result.returncode == 1
+    assert report["valid"] is False
+    assert any(
+        "UDF Volume Recognition Sequence requires BEA01 at sector 20" in error
+        for error in report["errors"]
+    )
