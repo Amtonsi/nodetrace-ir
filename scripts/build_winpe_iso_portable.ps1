@@ -39,7 +39,6 @@ $fetcher = Join-Path $projectRoot "tools\fetch_avz.ps1"
 $startnetSource = Join-Path $projectRoot "winpe\startnet.cmd"
 $launcherSource = Join-Path $projectRoot "winpe\launch_nodetrace.cmd"
 $fatBuilder = Join-Path $projectRoot "scripts\build_fat12_efi.py"
-$isoBuilder = Join-Path $projectRoot "scripts\build_iso.py"
 $isoVerifier = Join-Path $projectRoot "scripts\verify_bootable_iso.py"
 
 if ([string]::IsNullOrWhiteSpace($NodeTraceExecutable)) {
@@ -392,6 +391,36 @@ function Assert-WinPEProvenance {
             "$($expected.Role) file origin"
     }
 
+    $isoBuilderProvenance = $provenance.iso_builder
+    Assert-ExactManifestValue $isoBuilderProvenance.role "iso-builder-oscdimg" "oscdimg role"
+    Assert-ExactManifestValue $isoBuilderProvenance.msi.name "Windows Deployment Tools-x86_en-us.msi" "oscdimg MSI name"
+    Assert-ExactManifestValue $isoBuilderProvenance.msi.size "626688" "oscdimg MSI size"
+    Assert-ExactManifestValue $isoBuilderProvenance.msi.sha256 "5DA7A3F65E6364735FBCEB08357773387D2B035B0073BA0BBC19A76A548C95B2" "oscdimg MSI SHA-256" -IgnoreCase
+    Assert-ExactManifestValue $isoBuilderProvenance.msi.authenticode "Valid" "oscdimg MSI signature"
+    Assert-ExactManifestValue $isoBuilderProvenance.msi.signer_organization "Microsoft Corporation" "oscdimg MSI signer"
+    Assert-ExactManifestValue $isoBuilderProvenance.cab.name "5d984200acbde182fd99cbfbe9bad133.cab" "oscdimg CAB name"
+    Assert-ExactManifestValue $isoBuilderProvenance.cab.size "1281728" "oscdimg CAB size"
+    Assert-ExactManifestValue $isoBuilderProvenance.cab.sha1 "542F751C77ED5F21EE3FB317333CC509A2484228" "oscdimg CAB SHA-1" -IgnoreCase
+    Assert-ExactManifestValue $isoBuilderProvenance.cab.sha256 "D693C814E565012D34BB53A985E116D328E6E03674C29809D3875C50F758EBAC" "oscdimg CAB SHA-256" -IgnoreCase
+    Assert-ExactManifestValue $isoBuilderProvenance.member.cab_member "fil720cc132fbb53f3bed2e525eb77bdbc1" "oscdimg CAB member"
+    Assert-ExactManifestValue $isoBuilderProvenance.member.path "Tools/oscdimg.exe" "oscdimg output path"
+    Assert-ExactManifestValue $isoBuilderProvenance.member.file_name "oscdimg.exe" "oscdimg MSI file name"
+    Assert-ExactManifestValue $isoBuilderProvenance.member.file_size "117824" "oscdimg MSI file size"
+    Assert-ExactManifestValue $isoBuilderProvenance.member.file_version "2.56.0.1010" "oscdimg MSI file version"
+    Assert-ExactManifestValue $isoBuilderProvenance.member.sequence "215" "oscdimg MSI sequence"
+    Assert-ExactManifestValue $isoBuilderProvenance.extracted_file.size "117824" "oscdimg extracted size"
+    Assert-ExactManifestValue $isoBuilderProvenance.extracted_file.sha256 "59972E5867CFAD380D0FE376575221FB6ABB5F6B847A4D833916680E9ECCE8D9" "oscdimg extracted SHA-256" -IgnoreCase
+    Assert-ExactManifestValue $isoBuilderProvenance.extracted_file.authenticode "Valid" "oscdimg signature"
+    Assert-ExactManifestValue $isoBuilderProvenance.extracted_file.signer_organization "Microsoft Corporation" "oscdimg signer"
+    Assert-ExactManifestValue $isoBuilderProvenance.pe_machine "0x014C" "oscdimg PE machine"
+    Assert-ExactManifestValue $isoBuilderProvenance.file_version "2.56" "oscdimg file version"
+    if (-not $Records.ContainsKey("Tools/oscdimg.exe")) {
+        throw "WinPE files manifest is missing Tools/oscdimg.exe."
+    }
+    Assert-ExactManifestValue $Records["Tools/oscdimg.exe"].origin_role "iso-builder-oscdimg" "oscdimg file origin"
+    Assert-ExactManifestValue $Records["Tools/oscdimg.exe"].size "117824" "oscdimg file size"
+    Assert-ExactManifestValue $Records["Tools/oscdimg.exe"].sha256 "59972E5867CFAD380D0FE376575221FB6ABB5F6B847A4D833916680E9ECCE8D9" "oscdimg file SHA-256" -IgnoreCase
+
     $expectedHostAssets = @(
         [pscustomobject]@{
             Path = "Media/Boot/BCD"
@@ -486,8 +515,14 @@ function Read-And-VerifyWinPEManifest {
     )
     foreach ($record in @($manifest.files)) {
         $relative = Assert-SafeRelativePath ([string]$record.path)
-        if (-not $relative.StartsWith("Media/", [StringComparison]::OrdinalIgnoreCase)) {
-            throw "WinPE manifest entry is outside the Media tree: $relative"
+        $isMediaFile = $relative.StartsWith("Media/", [StringComparison]::OrdinalIgnoreCase)
+        $isPinnedTool = [string]::Equals(
+            $relative,
+            "Tools/oscdimg.exe",
+            [StringComparison]::OrdinalIgnoreCase
+        )
+        if (-not $isMediaFile -and -not $isPinnedTool) {
+            throw "WinPE manifest entry is outside the allowed Media/Tools trees: $relative"
         }
         if ($records.ContainsKey($relative)) {
             throw "Duplicate WinPE extraction manifest path: $relative"
@@ -603,7 +638,6 @@ foreach ($required in @(
     $startnetSource,
     $launcherSource,
     $fatBuilder,
-    $isoBuilder,
     $isoVerifier
 )) {
     Assert-RegularFile $required
@@ -696,7 +730,8 @@ $bcdFull = Get-FullPath $Bcd
 $bootIa32Full = Get-FullPath $BootIa32Efi
 $bootManagerFull = Get-FullPath $BootManager
 $winPEManifestFull = Get-FullPath $WinPEExtractionManifest
-foreach ($required in @($winPEWimFull, $bootSdiFull, $bcdFull, $bootIa32Full, $bootManagerFull, $winPEManifestFull)) {
+$oscdimgFull = Get-FullPath (Join-Path (Split-Path -Parent $winPEManifestFull) "Tools\oscdimg.exe")
+foreach ($required in @($winPEWimFull, $bootSdiFull, $bcdFull, $bootIa32Full, $bootManagerFull, $winPEManifestFull, $oscdimgFull)) {
     Assert-RegularFile $required
 }
 $efiBootImageFull = $null
@@ -710,6 +745,23 @@ if (-not [string]::IsNullOrWhiteSpace($EfiBootImage)) {
 }
 
 $winPEManifestState = Read-And-VerifyWinPEManifest $winPEManifestFull
+Assert-InputMatchesWinPEManifest $oscdimgFull "Tools/oscdimg.exe" $winPEManifestState
+$oscdimgHash = (Get-FileHash -LiteralPath $oscdimgFull -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($oscdimgHash -ne "59972e5867cfad380d0fe376575221fb6abb5f6b847a4d833916680e9ecce8d9") {
+    throw "oscdimg.exe failed its pinned SHA-256 identity."
+}
+if ((Get-Item -LiteralPath $oscdimgFull).Length -ne 117824) {
+    throw "oscdimg.exe failed its pinned size identity."
+}
+if ((Get-PeMachine $oscdimgFull) -ne 0x014C) {
+    throw "The pinned oscdimg.exe is not x86."
+}
+Assert-MicrosoftAuthenticode $oscdimgFull "oscdimg.exe"
+$oscdimgVersion = [Diagnostics.FileVersionInfo]::GetVersionInfo($oscdimgFull).FileVersion
+if ($oscdimgVersion -ne "2.56") {
+    throw "Unexpected oscdimg.exe file version: '$oscdimgVersion'."
+}
+
 Assert-InputMatchesWinPEManifest $winPEWimFull "Media/sources/boot.wim" $winPEManifestState
 Assert-MsiFileHash `
     $winPEWimFull `
@@ -1010,8 +1062,7 @@ try {
 
     New-Item -ItemType Directory -Path ([IO.Path]::GetDirectoryName($outputFull)) -Force | Out-Null
     Invoke-Checked $Python @(
-        $isoBuilder,
-        "--staging",
+            "--staging",
         $stagingRoot,
         "--output",
         $outputFull,
