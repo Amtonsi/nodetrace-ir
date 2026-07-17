@@ -28,6 +28,7 @@ MAX_DIRECTORY_BYTES = 64 * 1024 * 1024
 MAX_DIRECTORY_RECORDS = 200_000
 MAX_DIRECTORY_DEPTH = 64
 EL_TORITO_SYSTEM_ID = b"EL TORITO SPECIFICATION"
+UDF_NSR02_VRS_IDENTIFIERS = (b"BEA01", b"NSR02", b"TEA01")
 
 PLATFORMS = {
     0x00: "BIOS",
@@ -141,6 +142,40 @@ def _read_volume_descriptors(reader: ImageReader) -> VolumeDescriptors:
         raise IsoVerificationError("Multiple El Torito boot records make the boot catalog ambiguous")
     return VolumeDescriptors(primary, joliet, boot_records[0], terminator_sector)
 
+
+def _read_udf_nsr02_vrs(
+    reader: ImageReader, terminator_sector: int
+) -> dict[str, object]:
+    start_sector = terminator_sector + 1
+    descriptors: list[dict[str, object]] = []
+    for offset, expected_identifier in enumerate(UDF_NSR02_VRS_IDENTIFIERS):
+        sector_number = start_sector + offset
+        descriptor = reader.sector(
+            sector_number,
+            what=(
+                "UDF Volume Recognition Sequence descriptor "
+                f"{expected_identifier.decode('ascii')} at sector {sector_number}"
+            ),
+        )
+        actual_identifier = descriptor[1:6].decode("ascii", "replace")
+        if (
+            descriptor[0] != 0
+            or descriptor[1:6] != expected_identifier
+            or descriptor[6] != 1
+        ):
+            raise IsoVerificationError(
+                "UDF Volume Recognition Sequence requires "
+                f"{expected_identifier.decode('ascii')} at sector {sector_number}; "
+                f"found type 0x{descriptor[0]:02X}, "
+                f"identifier {actual_identifier!r}, version {descriptor[6]}"
+            )
+        descriptors.append(
+            {
+                "identifier": expected_identifier.decode("ascii"),
+                "sector": sector_number,
+            }
+        )
+    return {"start_sector": start_sector, "descriptors": descriptors}
 
 def _validation_entry(raw: bytes) -> dict[str, object]:
     if len(raw) != 32:
@@ -519,7 +554,11 @@ def _expected_path_results(
     return results, errors
 
 
-def verify_iso(image: Path | str, expected_paths: Iterable[str] = ()) -> dict[str, object]:
+def verify_iso(
+    image: Path | str,
+    expected_paths: Iterable[str] = (),
+    require_udf_nsr02: bool = False,
+) -> dict[str, object]:
     """Return a JSON-serializable verification report for *image*."""
 
     source = Path(image)
@@ -531,6 +570,7 @@ def verify_iso(image: Path | str, expected_paths: Iterable[str] = ()) -> dict[st
             "sha256": None,
         },
         "iso9660": None,
+        "udf_nsr02": None,
         "el_torito": None,
         "boot_modes": [],
         "expected_paths": [],
@@ -620,6 +660,10 @@ def verify_iso(image: Path | str, expected_paths: Iterable[str] = ()) -> dict[st
             )
             report["expected_paths"] = path_results
             errors.extend(path_errors)
+            if require_udf_nsr02:
+                report["udf_nsr02"] = _read_udf_nsr02_vrs(
+                    reader, descriptors.terminator_sector
+                )
     except (IsoVerificationError, OSError) as exc:
         errors.append(str(exc))
 
@@ -638,6 +682,14 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         help="Require a case-insensitive ISO-9660 or Joliet path (repeatable)",
     )
     parser.add_argument(
+        "--require-udf-nsr02",
+        action="store_true",
+        help=(
+            "Require consecutive BEA01, NSR02, and TEA01 descriptors immediately "
+            "after the ISO descriptor terminator"
+        ),
+    )
+    parser.add_argument(
         "--compact", action="store_true", help="Emit compact JSON instead of indented JSON"
     )
     return parser.parse_args(argv)
@@ -645,7 +697,11 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def main(argv: list[str] | None = None) -> int:
     arguments = _parse_args(argv)
-    report = verify_iso(arguments.image, arguments.expect_path)
+    report = verify_iso(
+        arguments.image,
+        arguments.expect_path,
+        require_udf_nsr02=arguments.require_udf_nsr02,
+    )
     print(
         json.dumps(
             report,
