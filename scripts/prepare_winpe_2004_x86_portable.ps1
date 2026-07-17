@@ -150,6 +150,36 @@ function Assert-MsiMemberHash {
     }
 }
 
+function Assert-MsiFileTableRow {
+    param(
+        [Parameter(Mandatory = $true)][string]$Msi,
+        [Parameter(Mandatory = $true)][string]$Member,
+        [Parameter(Mandatory = $true)][string]$FileName,
+        [Parameter(Mandatory = $true)][long]$Size,
+        [Parameter(Mandatory = $true)][string]$Version,
+        [Parameter(Mandatory = $true)][int]$Sequence
+    )
+    $installer = New-Object -ComObject WindowsInstaller.Installer
+    $database = $installer.OpenDatabase($Msi, 0)
+    $escaped = $Member.Replace("'", "''")
+    $view = $database.OpenView(
+        "SELECT ``FileName``,``FileSize``,``Version``,``Sequence`` " +
+        "FROM ``File`` WHERE ``File``='$escaped'"
+    )
+    [void]$view.Execute()
+    try {
+        $record = $view.Fetch()
+        if ($null -eq $record) { throw "Signed MSI has no File row for '$Member'." }
+        if (
+            $record.StringData(1) -ne $FileName -or
+            $record.IntegerData(2) -ne $Size -or
+            $record.StringData(3) -ne $Version -or
+            $record.IntegerData(4) -ne $Sequence
+        ) { throw "Signed MSI File row mismatch for '$Member'." }
+    }
+    finally { [void]$view.Close() }
+}
+
 function Invoke-PythonChecked {
     param(
         [Parameter(Mandatory = $true)][string]$Label,
@@ -220,6 +250,7 @@ New-Item -ItemType Directory -Path $provenanceDir | Out-Null
 $bootWim = Assert-StrictChildPath (Join-Path $OutputRoot "Media\sources\boot.wim") $OutputRoot
 $bootManager = Assert-StrictChildPath (Join-Path $OutputRoot "Media\bootmgr") $OutputRoot
 $efiImage = Assert-StrictChildPath (Join-Path $OutputRoot "Media\fwfiles\efisys.bin") $OutputRoot
+$oscdimg = Assert-StrictChildPath (Join-Path $OutputRoot "Tools\oscdimg.exe") $OutputRoot
 $bootIa32 = Assert-StrictChildPath (Join-Path $OutputRoot "Media\EFI\Boot\bootia32.efi") $OutputRoot
 $bootBcd = Assert-StrictChildPath (Join-Path $OutputRoot "Media\Boot\BCD") $OutputRoot
 $bootSdi = Assert-StrictChildPath (Join-Path $OutputRoot "Media\Boot\boot.sdi") $OutputRoot
@@ -243,6 +274,7 @@ Invoke-PythonChecked "Extracting the official IA32 EFI El Torito image" @(
     "--full-cab", $efiCab,
     "--output-dir", $OutputRoot,
     "--map", "fil4db617e977c2929fa4a8a113dcc24567=Media/fwfiles/efisys.bin",
+    "--map", "fil720cc132fbb53f3bed2e525eb77bdbc1=Tools/oscdimg.exe",
     "--manifest", (Join-Path $provenanceDir "efisys-extraction.json")
 )
 Invoke-PythonChecked "Recovering signed BOOTIA32.EFI from the official FAT12 image" @(
@@ -257,13 +289,27 @@ Assert-FileIdentity $efiImage 1474560 "SHA256" `
     "51831A5EF7480BCFC39D306DDF4E12C89093CE35519862B99A07354E352C4E89"
 Assert-FileIdentity $bootIa32 1010080 "SHA256" `
     "BB5B85E5CF1F582CC2A9F269E48EB6BA1B6AC0445006DA911DA981AB87D14F97"
+Assert-FileIdentity $oscdimg 117824 "SHA256" `
+    "59972E5867CFAD380D0FE376575221FB6ABB5F6B847A4D833916680E9ECCE8D9"
 Assert-MsiMemberHash $wimMsi "fil642ac1bd3326d4b59398fe460db370b9" $bootWim `
     @(-721854461, 650304993, 1499151182, 1220197130)
 Assert-MsiMemberHash $mediaMsi "fila6a550eed89046f3810ad344d06b2f13" $bootManager `
     @(1073898854, 1102876665, 502589138, -1875494190)
 Assert-MsiMemberHash $deploymentMsi "fil4db617e977c2929fa4a8a113dcc24567" $efiImage `
     @(1498138875, 923298925, 130554703, -663301826)
+Assert-MsiFileTableRow `
+    $deploymentMsi `
+    "fil720cc132fbb53f3bed2e525eb77bdbc1" `
+    "oscdimg.exe" `
+    117824 `
+    "2.56.0.1010" `
+    215
 Assert-MicrosoftSignature $bootIa32 | Out-Null
+Assert-MicrosoftSignature $oscdimg | Out-Null
+$oscdimgVersion = [Diagnostics.FileVersionInfo]::GetVersionInfo($oscdimg).FileVersion
+if ($oscdimgVersion -ne "2.56") {
+    throw "Unexpected oscdimg.exe file version: '$oscdimgVersion'."
+}
 
 $windowsRoot = Get-FullPath $env:SystemRoot
 if (-not [string]::Equals($windowsRoot, "C:\Windows", [StringComparison]::OrdinalIgnoreCase)) {
@@ -289,6 +335,7 @@ $originRoles = [ordered]@{
     "Media/EFI/Boot/bootia32.efi" = "ia32-efi-el-torito-loader"
     "Media/Boot/BCD" = "host-pcat-bcd"
     "Media/Boot/boot.sdi" = "host-boot-sdi"
+    "Tools/oscdimg.exe" = "iso-builder-oscdimg"
 }
 $manifestFiles = @(
     foreach ($relative in $originRoles.Keys) {
@@ -391,6 +438,27 @@ $manifest = [ordered]@{
                 }
             }
         )
+        iso_builder = [ordered]@{
+            role = "iso-builder-oscdimg"
+            msi = New-SignedFileProvenance $deploymentMsi
+            cab = [ordered]@{
+                name = "5d984200acbde182fd99cbfbe9bad133.cab"
+                size = 1281728L
+                sha1 = "542F751C77ED5F21EE3FB317333CC509A2484228"
+                sha256 = "D693C814E565012D34BB53A985E116D328E6E03674C29809D3875C50F758EBAC"
+            }
+            member = [ordered]@{
+                cab_member = "fil720cc132fbb53f3bed2e525eb77bdbc1"
+                path = "Tools/oscdimg.exe"
+                file_name = "oscdimg.exe"
+                file_size = 117824L
+                file_version = "2.56.0.1010"
+                sequence = 215
+            }
+            extracted_file = New-SignedFileProvenance $oscdimg
+            pe_machine = "0x014C"
+            file_version = "2.56"
+        }
         host_assets = @(
             [ordered]@{
                 source_type = "host-windows-signed"
