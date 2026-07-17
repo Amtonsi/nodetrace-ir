@@ -51,6 +51,12 @@ def test_portable_builder_requires_verified_x86_inputs_and_avz() -> None:
     assert '"nodetrace-winpe-extraction/v1"' in script
     assert '"Microsoft Windows PE add-on 10.1.19041.5856"' in script
     assert '"nodetrace-microsoft-adk-2004-x86/v1"' in script
+    assert 'CabSha1 = "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"' in script
+    assert 'CabSha256 = "BFBEF5062372192C42D3833BE0AB99A9C197B4271D7B47D76F299C57DD6FA071"' in script
+    assert "CabSha256 = $null" not in script
+    assert "if ($null -ne $expected.CabSha256)" not in script
+    assert "has no valid SHA-256 for the x86 boot WIM CAB" not in script
+    assert "Assert-ExactManifestValue $payload.cab.sha256 $expected.CabSha256" in script
     assert "Assert-WinPEProvenance" in script
     assert "Assert-MsiFileHash" in script
     assert "fil642ac1bd3326d4b59398fe460db370b9" in script
