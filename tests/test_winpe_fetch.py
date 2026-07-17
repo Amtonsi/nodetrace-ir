@@ -398,6 +398,31 @@ def test_exact_part_partition_matches_pinned_wim_payload() -> None:
     assert resume_ranges.parse_indices("0-3,12-15", 16) == [0, 1, 2, 3, 12, 13, 14, 15]
 
 
+def test_portable_preparer_pins_wim_cab_with_exact_dual_hashes() -> None:
+    script = PREPARER_PATH.read_text(encoding="utf-8")
+    sha1 = "10FA653EF230E3CEA8E9C8E8A9DF9CCD412AB7ED"
+    sha256 = "BFBEF5062372192C42D3833BE0AB99A9C197B4271D7B47D76F299C57DD6FA071"
+    sha1_assertion = (
+        'Assert-FileIdentity $wimCab 199404031 "SHA1" $PinnedWimCabSha1'
+    )
+    sha256_assertion = (
+        'Assert-FileIdentity $wimCab 199404031 "SHA256" $PinnedWimCabSha256'
+    )
+    extraction = script.index(
+        'Invoke-PythonChecked "Extracting the pinned x86 boot WIM"'
+    )
+    manifest = script.index("$manifest = [ordered]@{")
+
+    assert f'$PinnedWimCabSha1 = "{sha1}"' in script
+    assert f'$PinnedWimCabSha256 = "{sha256}"' in script
+    assert '"690b8ac88bc08254d351654d56805aea.cab" 199404031 "SHA256" `' in script
+    assert script.index(sha1_assertion) < extraction
+    assert extraction < script.rindex(sha1_assertion) < manifest
+    assert extraction < script.index(sha256_assertion) < manifest
+    assert "sha1 = $PinnedWimCabSha1" in script
+    assert "sha256 = $PinnedWimCabSha256" in script
+    assert "$wimCabSha256 = (Get-FileHash" not in script
+
 def test_portable_preparer_pins_embedded_signed_ia32_loader() -> None:
     script = PREPARER_PATH.read_text(encoding="utf-8")
     assert 'source_image_path = "Media/fwfiles/efisys.bin"' in script
