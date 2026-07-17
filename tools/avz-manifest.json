@@ -1,0 +1,1091 @@
+{
+  "schema_version": 1,
+  "pinned_at_utc": "2026-07-16T13:49:52+00:00",
+  "source_page": "https://z-oleg.com/secur/avz/download.php",
+  "license_acknowledgement": "noncommercial-consent",
+  "mutable_upstream_warning": "Official URLs are mutable and the full base has no published strong signature. This hash is a locally reviewed provenance pin; future changes require another explicit re-pin.",
+  "archives": [
+    {
+      "name": "avz4.zip",
+      "url": "https://z-oleg.com/avz4.zip",
+      "last_modified_utc": "2010-01-15T07:53:10Z",
+      "size": 10112832,
+      "sha256": "a7e935ab86aebcf9f16496055a490f9f58f1ef76761aa0366420f49b209d9c6e",
+      "md5": "736146ec6bc2e95fc295b0462fdd68f7",
+      "upstream_md5_published": true,
+      "zip": {
+        "entry_count": 73,
+        "uncompressed_size": 10196285,
+        "entries": [
+          {
+            "path": "avz4/avz.exe",
+            "size": 794624,
+            "compressed_size": 758574,
+            "crc32": "A2F1B23A",
+            "sha256": "8cb34f88a720d337f726283052ae602e3e74c829e8a112283cfdba8b60958482"
+          },
+          {
+            "path": "avz4/avz.url",
+            "size": 156,
+            "compressed_size": 102,
+            "crc32": "2492EF95",
+            "sha256": "b8c1b6418284051f9771c92169c42ef2ebe0f03172f5b4a839a1400e0b827854"
+          },
+          {
+            "path": "avz4/avz_en.chm",
+            "size": 433648,
+            "compressed_size": 417906,
+            "crc32": "49ED4A7B",
+            "sha256": "111df35017f36de43fe4f47a6a7b0e00c5ef289ccf791e763e2337843b0eb989"
+          },
+          {
+            "path": "avz4/avz_ru.chm",
+            "size": 519242,
+            "compressed_size": 503852,
+            "crc32": "AEA43BA8",
+            "sha256": "86ee636068613fc030c20e736e70723ff12aed9d4deacbfc81be1b8876df2303"
+          },
+          {
+            "path": "avz4/Base/",
+            "size": 0,
+            "compressed_size": 0,
+            "crc32": "00000000",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "avz4/Base/backup.avz",
+            "size": 884,
+            "compressed_size": 884,
+            "crc32": "EB480E5F",
+            "sha256": "9f0050e66e461e52e53ae75b407506e9863d8a4d5256140fa279a6b705efe710"
+          },
+          {
+            "path": "avz4/Base/bt.avz",
+            "size": 2991,
+            "compressed_size": 2991,
+            "crc32": "A462144E",
+            "sha256": "c388a77ba03cd00cfbcc24a2cdac239322bb9a8335e4c0fbf2c8095d67c40d08"
+          },
+          {
+            "path": "avz4/Base/esc.avz",
+            "size": 555,
+            "compressed_size": 555,
+            "crc32": "C2DB229F",
+            "sha256": "d06de59a23899be6e4a8304362ad95971cfe6a6bb7e5a924b82691b690822e2c"
+          },
+          {
+            "path": "avz4/Base/exc.avz",
+            "size": 791,
+            "compressed_size": 791,
+            "crc32": "EDB94D71",
+            "sha256": "207fa71a3f23a1e58570e7448c213fac47b6953778431c875a56a03dc865f08b"
+          },
+          {
+            "path": "avz4/Base/extract.avz",
+            "size": 75998,
+            "compressed_size": 76023,
+            "crc32": "3FA203DF",
+            "sha256": "4debe64047b9b783d5799f8744314b5b4045590ff9b27594ff4086a5a5335a98"
+          },
+          {
+            "path": "avz4/Base/keylogger.avz",
+            "size": 509,
+            "compressed_size": 509,
+            "crc32": "BFFD8B8E",
+            "sha256": "cd721c9b06558795799a62dea6d657ce2b1bb1b1ee9bf5358887ea5d7af6446e"
+          },
+          {
+            "path": "avz4/Base/krnldrv.avz",
+            "size": 15081,
+            "compressed_size": 15081,
+            "crc32": "4AEC9681",
+            "sha256": "b55e85167e8eddb1385775c231e2cfd5aaf0e5fb1fb86136729ecf2f79eaedff"
+          },
+          {
+            "path": "avz4/Base/lang_en.avz",
+            "size": 25033,
+            "compressed_size": 25043,
+            "crc32": "135F9EFA",
+            "sha256": "23fa7d20512e7895f9889b581a4aa2c2bc0e03cd6260e2307dbf1b92171fdba0"
+          },
+          {
+            "path": "avz4/Base/lang_ru.avz",
+            "size": 28162,
+            "compressed_size": 28172,
+            "crc32": "8DEAFB29",
+            "sha256": "fdb63ddfffa1518899777573a75413156b75bc19eb1c344f2078795071e17b50"
+          },
+          {
+            "path": "avz4/Base/main.avz",
+            "size": 134395,
+            "compressed_size": 134440,
+            "crc32": "2CF9E2CE",
+            "sha256": "c1fcadc3eede193b276cb4b2a60b9f0ad5ecf6ecc90712d0b8fbe548eebaa749"
+          },
+          {
+            "path": "avz4/Base/main001.avz",
+            "size": 148078,
+            "compressed_size": 148128,
+            "crc32": "E81654CE",
+            "sha256": "b266ff8ecf2ef5606eb8fd01b70623ea6dc05add587f1e32e44cda8fb68cb561"
+          },
+          {
+            "path": "avz4/Base/main002.avz",
+            "size": 171644,
+            "compressed_size": 171699,
+            "crc32": "AC886DF5",
+            "sha256": "1dc7f73fac55db32552d028a31512be709052133e403ea8c189eb594e2ec49ce"
+          },
+          {
+            "path": "avz4/Base/main003.avz",
+            "size": 152611,
+            "compressed_size": 152661,
+            "crc32": "54E71B67",
+            "sha256": "ca4858211dcea864502e861a400948a45c84d1da9ebdea341cc7c3dbadb0d716"
+          },
+          {
+            "path": "avz4/Base/main004.avz",
+            "size": 74214,
+            "compressed_size": 74239,
+            "crc32": "3025C66E",
+            "sha256": "7d2b248388d3b1fbff5bd14f014be06aca3090b0ea4f931c9b8d9c349bf3a1dd"
+          },
+          {
+            "path": "avz4/Base/main005.avz",
+            "size": 133964,
+            "compressed_size": 134009,
+            "crc32": "362C51DC",
+            "sha256": "ecbb66777dc05c935f2e5ccb34f7c832f4d96e1de16d27d09d470644aa67c7f9"
+          },
+          {
+            "path": "avz4/Base/main006.avz",
+            "size": 143000,
+            "compressed_size": 143045,
+            "crc32": "A4713870",
+            "sha256": "a75d91d9b4b4249e5354dbbc5f027b147674cfa3b8a82f2219144ec94823c161"
+          },
+          {
+            "path": "avz4/Base/main007.avz",
+            "size": 148675,
+            "compressed_size": 148725,
+            "crc32": "FC3CAE67",
+            "sha256": "3bbf31d94edf2ea49628e8371da60cb57f6138c9527af137feeb4f6d3773e858"
+          },
+          {
+            "path": "avz4/Base/main008.avz",
+            "size": 131446,
+            "compressed_size": 131491,
+            "crc32": "B7BDE5D9",
+            "sha256": "a3f4330d1f410bd8f225aaadbba23fea194bae42a62e5347e344da4be5c050d6"
+          },
+          {
+            "path": "avz4/Base/main009.avz",
+            "size": 147861,
+            "compressed_size": 147911,
+            "crc32": "D43DBA3F",
+            "sha256": "f340c16fa8010010916f231aa72fd1ee3354cc548b1322ff935db51c9b7c2ff6"
+          },
+          {
+            "path": "avz4/Base/main010.avz",
+            "size": 146943,
+            "compressed_size": 146988,
+            "crc32": "4A3B70BB",
+            "sha256": "f0f44712fca948ea4712f68b4e494f43d492490ea4b296942e751593d9db59b9"
+          },
+          {
+            "path": "avz4/Base/main011.avz",
+            "size": 142304,
+            "compressed_size": 142349,
+            "crc32": "A0FA0937",
+            "sha256": "95c09717862a76a1e875ec56e684add1b0a75a5b8955d81b41d51c4c004547a5"
+          },
+          {
+            "path": "avz4/Base/main012.avz",
+            "size": 141852,
+            "compressed_size": 141897,
+            "crc32": "38FB1B86",
+            "sha256": "685d1cd97ea278b01d199eec5c8f1c15eb831c0c15315ce60feaa1fbf4729bb0"
+          },
+          {
+            "path": "avz4/Base/main013.avz",
+            "size": 129388,
+            "compressed_size": 129428,
+            "crc32": "D85544E2",
+            "sha256": "71a9a47f0b067343f831da05dc9f06e6394646e5a757e399ca2df800ce302963"
+          },
+          {
+            "path": "avz4/Base/main014.avz",
+            "size": 116129,
+            "compressed_size": 116169,
+            "crc32": "B757706D",
+            "sha256": "1991d75f99b339ced0a1f46934ca43ee1181c67e3513cb62a2b4515f77f1b8a4"
+          },
+          {
+            "path": "avz4/Base/main015.avz",
+            "size": 121669,
+            "compressed_size": 121709,
+            "crc32": "E7918888",
+            "sha256": "0776ee68190c7cd8e8450198c9ae98a10fac1691f588c1fdca9fe806ba4e876a"
+          },
+          {
+            "path": "avz4/Base/main016.avz",
+            "size": 107395,
+            "compressed_size": 107430,
+            "crc32": "C06D646A",
+            "sha256": "f236729615afe176617b1547c1733120acfc218aca89fecaf83bd3544fb5e169"
+          },
+          {
+            "path": "avz4/Base/main017.avz",
+            "size": 147739,
+            "compressed_size": 147789,
+            "crc32": "736F75B5",
+            "sha256": "fea0ec1622f87397aec1c64df29a1e565c2304640d7189b62c48dfbe3d0e856d"
+          },
+          {
+            "path": "avz4/Base/main018.avz",
+            "size": 150896,
+            "compressed_size": 150946,
+            "crc32": "627706CF",
+            "sha256": "e0874e2b18cd5d1406e7d29f0642f82a05b96528d639ec9c79db8152923ff8b6"
+          },
+          {
+            "path": "avz4/Base/main019.avz",
+            "size": 152312,
+            "compressed_size": 152362,
+            "crc32": "1A93FE8F",
+            "sha256": "188ef6c892cd6825ff2c4bf677ed89abb036ce786369214791c3e611a020f575"
+          },
+          {
+            "path": "avz4/Base/main020.avz",
+            "size": 160919,
+            "compressed_size": 160969,
+            "crc32": "EACD9D79",
+            "sha256": "0495b0ea08b542e6bdcccf59a27788f32ceba611ef1a5e6c67bad41d66050d8e"
+          },
+          {
+            "path": "avz4/Base/main021.avz",
+            "size": 157053,
+            "compressed_size": 157103,
+            "crc32": "0D566636",
+            "sha256": "45d1d8ac9a3ee419309270c780ae911eadec04f3c0b80bd0ce5274ff286dc903"
+          },
+          {
+            "path": "avz4/Base/main022.avz",
+            "size": 142397,
+            "compressed_size": 142442,
+            "crc32": "63CA9A51",
+            "sha256": "a3a18ac0dc65b910f4424f73679d2007b63d7a1b63356f71fce47bd77a88b213"
+          },
+          {
+            "path": "avz4/Base/main023.avz",
+            "size": 120638,
+            "compressed_size": 120678,
+            "crc32": "CB8F2D05",
+            "sha256": "ec63213aeb6e62017d3d79511189622765f37eb8f872ebf234f6119896074f23"
+          },
+          {
+            "path": "avz4/Base/main024.avz",
+            "size": 154694,
+            "compressed_size": 154744,
+            "crc32": "456B4770",
+            "sha256": "8b87e52347e121e423f989ce221a081c90e0b205c9a63cee49d3a01f9446e695"
+          },
+          {
+            "path": "avz4/Base/main025.avz",
+            "size": 119091,
+            "compressed_size": 119131,
+            "crc32": "82CAC55A",
+            "sha256": "89e328e431d34773396327fd398d8f6ca027e1ccb7472d94b6f4267b34907c81"
+          },
+          {
+            "path": "avz4/Base/main026.avz",
+            "size": 147753,
+            "compressed_size": 147803,
+            "crc32": "BED3BCFE",
+            "sha256": "36f7c02790baf3cf642a541ad669a6a17a74e0b63d2ec34183b42cdd58dfcf17"
+          },
+          {
+            "path": "avz4/Base/main027.avz",
+            "size": 145511,
+            "compressed_size": 145556,
+            "crc32": "6649C1A4",
+            "sha256": "504f0cd3f82f12023922656641b98eae1222b070ae4de9b556342ba24cdfd42e"
+          },
+          {
+            "path": "avz4/Base/main028.avz",
+            "size": 149328,
+            "compressed_size": 149378,
+            "crc32": "84FE34AD",
+            "sha256": "a57f556f41722e105263d24378561209d318819c32fa19fff7681feb38c4464e"
+          },
+          {
+            "path": "avz4/Base/main029.avz",
+            "size": 126783,
+            "compressed_size": 126823,
+            "crc32": "A4F997DB",
+            "sha256": "60d9e6f1bcaaaa30f0d8855ff7b9bf5faa68465941b097a87bdaf59ed53886d2"
+          },
+          {
+            "path": "avz4/Base/net.avz",
+            "size": 1585,
+            "compressed_size": 1585,
+            "crc32": "1CB653A3",
+            "sha256": "2ca2c8fa4038f3a3e82dd90bb25c94b9dfcf4d01110fb010610759966c1786ae"
+          },
+          {
+            "path": "avz4/Base/neural.avz",
+            "size": 7499,
+            "compressed_size": 7499,
+            "crc32": "2E7B1343",
+            "sha256": "dfacc05c46d82251fcadeba7da9d1de2b516fa170a615dec3959293e157f8298"
+          },
+          {
+            "path": "avz4/Base/neurald.avz",
+            "size": 325,
+            "compressed_size": 325,
+            "crc32": "3034E3C0",
+            "sha256": "c0fc88151f25420377df134c72dda4495a8907984525596f54472159f2de8568"
+          },
+          {
+            "path": "avz4/Base/neurale.avz",
+            "size": 804,
+            "compressed_size": 804,
+            "crc32": "DA77687C",
+            "sha256": "fcd5812279231c3426d5634b2f5c5f430b7bae7d96b0b29a720987d401b6c5d8"
+          },
+          {
+            "path": "avz4/Base/neuralm.avz",
+            "size": 3749,
+            "compressed_size": 3749,
+            "crc32": "3613D787",
+            "sha256": "e379fb3a332222eccf8c71947e7f03e1289c9e52a7f1d71cf820ab8e1cac199e"
+          },
+          {
+            "path": "avz4/Base/par.avz",
+            "size": 458,
+            "compressed_size": 458,
+            "crc32": "DEC54EFE",
+            "sha256": "c24e87d18a22fbc934bec2701b947ceccc10026d6bfcfc341f196a0bafc65a68"
+          },
+          {
+            "path": "avz4/Base/ports.avz",
+            "size": 3945,
+            "compressed_size": 3945,
+            "crc32": "A8AC724F",
+            "sha256": "67bf8419be6f378b31c8ada1479f89d8c522e0380a1bbea2033d05bacd90667d"
+          },
+          {
+            "path": "avz4/Base/prt.avz",
+            "size": 7218,
+            "compressed_size": 7218,
+            "crc32": "862125D9",
+            "sha256": "e95f873028a843328f6901a949293a5b30b9095674ec228e5a8f39d46ab9ce6c"
+          },
+          {
+            "path": "avz4/Base/repair.avz",
+            "size": 8247,
+            "compressed_size": 8247,
+            "crc32": "F343A13A",
+            "sha256": "1b75004555b3a1dbda20d485dab1654c61b7a023bb9a59ca14013fe01d1b8109"
+          },
+          {
+            "path": "avz4/Base/rootkit.avz",
+            "size": 4217,
+            "compressed_size": 4217,
+            "crc32": "B782A875",
+            "sha256": "9d873fb58629886681407dce7a9d3c3e88985b58e9c2616b6291168efa7e170d"
+          },
+          {
+            "path": "avz4/Base/scripts.avz",
+            "size": 1651,
+            "compressed_size": 1651,
+            "crc32": "12F571D1",
+            "sha256": "8f3211539547736015a76a2c05ed5dcd543ef68668e8c0e5f92ca4657cd75c29"
+          },
+          {
+            "path": "avz4/Base/scu.avz",
+            "size": 5560,
+            "compressed_size": 5560,
+            "crc32": "0423E68B",
+            "sha256": "d1d6f0c96a01af7412dbdb5a8f939ea46c743ba3582f31c627127cf249bf3431"
+          },
+          {
+            "path": "avz4/Base/signf001.avz",
+            "size": 381808,
+            "compressed_size": 381928,
+            "crc32": "FCDD99FB",
+            "sha256": "45e62534e88bd48e96e6cfea53f20e9990723b769f568f58dfcf69cc8024e406"
+          },
+          {
+            "path": "avz4/Base/signf002.avz",
+            "size": 383668,
+            "compressed_size": 383788,
+            "crc32": "DB87D05D",
+            "sha256": "30ce06da298afb1ad933cbf17a1eab15e2506ddd9a0f2cf92fb1a4e3a6af25aa"
+          },
+          {
+            "path": "avz4/Base/signf003.avz",
+            "size": 385699,
+            "compressed_size": 385819,
+            "crc32": "B5D39966",
+            "sha256": "643f1b91f3c908b3ac8996c72104d92979bdf0c95d0157da80243f5271298084"
+          },
+          {
+            "path": "avz4/Base/signf004.avz",
+            "size": 378564,
+            "compressed_size": 378684,
+            "crc32": "107DAFFC",
+            "sha256": "305d5c4a54cb01267faeac7c77cbe64a5fa9ccf57f2ac8a55cf5af5b6573ed9a"
+          },
+          {
+            "path": "avz4/Base/signf005.avz",
+            "size": 387122,
+            "compressed_size": 387242,
+            "crc32": "9FBC5E6F",
+            "sha256": "d8be92f61571a0b4426d4451e55f580b48798fa516afa61e4dae5adc9e421446"
+          },
+          {
+            "path": "avz4/Base/signf006.avz",
+            "size": 390573,
+            "compressed_size": 390693,
+            "crc32": "71BA2F56",
+            "sha256": "1a3ed33d12e1bf606414fb2313a86221dfed3db469fa5323f87a1a3673db7f07"
+          },
+          {
+            "path": "avz4/Base/signf007.avz",
+            "size": 392181,
+            "compressed_size": 392301,
+            "crc32": "117D15D9",
+            "sha256": "ece52a399635e20047708466b1f664a34e8775b5bbc0fc5fbd0ab994484b4e9b"
+          },
+          {
+            "path": "avz4/Base/signf008.avz",
+            "size": 394314,
+            "compressed_size": 394439,
+            "crc32": "F17CF9E1",
+            "sha256": "ee723c2969e57fb72561f1234085b44846573f2638642e300c7fdc7e9248a7a7"
+          },
+          {
+            "path": "avz4/Base/signf009.avz",
+            "size": 349775,
+            "compressed_size": 349885,
+            "crc32": "D42C1813",
+            "sha256": "b57702d2eb65c14459c9e838bb357b611efdeefd4d616a3bf562409d8e23ff65"
+          },
+          {
+            "path": "avz4/Base/signfusr.avz",
+            "size": 376420,
+            "compressed_size": 376535,
+            "crc32": "CB2EF9BB",
+            "sha256": "a7fe9e90ef6418bd536e797a9e0ea8e36665d3a95b489bb36949843050042de4"
+          },
+          {
+            "path": "avz4/Base/syscheck.avz",
+            "size": 189775,
+            "compressed_size": 189835,
+            "crc32": "0B09066E",
+            "sha256": "b72c86033f6e79ff0c78d1217ea0144becadcc9de003de6529fbc01f11313d6a"
+          },
+          {
+            "path": "avz4/Base/sysipu.avz",
+            "size": 1778,
+            "compressed_size": 1778,
+            "crc32": "4E382D5E",
+            "sha256": "0f44355546a3993224c9e216fa13624596ebd289c061af4f7d214efbf04aaca7"
+          },
+          {
+            "path": "avz4/Base/tsw.avz",
+            "size": 12371,
+            "compressed_size": 12371,
+            "crc32": "D1FCFD3E",
+            "sha256": "b9b2bd9160b9193713ae36655cae43605eb18298356fe64d242aeeded1c9206a"
+          },
+          {
+            "path": "avz4/Base/tsw-auto.avz",
+            "size": 11412,
+            "compressed_size": 11412,
+            "crc32": "4C40FEFC",
+            "sha256": "ba0f6f343dd99af68954b26113b2a8e784308619f2e4a8cf6a66488de4d0280a"
+          },
+          {
+            "path": "avz4/Base/update.avz",
+            "size": 89,
+            "compressed_size": 89,
+            "crc32": "6E4C50EF",
+            "sha256": "6ff819c46f71319ff5e236713f0e1722dd9ce5f8db296f1fba5e2189513b964b"
+          },
+          {
+            "path": "avz4/Base/vse_ru.avz",
+            "size": 7806,
+            "compressed_size": 7806,
+            "crc32": "A080B3AF",
+            "sha256": "968e4b2c481cb16fb79da6e319dcee6bbfb5324bc3c028fe26590dfdc576550d"
+          },
+          {
+            "path": "avz4/version.txt",
+            "size": 43316,
+            "compressed_size": 15960,
+            "crc32": "E596E5CB",
+            "sha256": "78e4a85002f44f8890b9441dd7c79d36bcd0953781528bc81d9b8a45cf9960d2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "avzbase.zip",
+      "url": "https://z-oleg.com/secur/avz_up/avzbase.zip",
+      "size": 12712101,
+      "sha256": "5732794eb8324e579051c39df7e52f473b45a825143e7ae7d692e6f74e2659a8",
+      "md5": "f179170da85d055a0b7fb73e9df11669",
+      "upstream_md5_published": false,
+      "zip": {
+        "entry_count": 77,
+        "uncompressed_size": 12704573,
+        "entries": [
+          {
+            "path": "signf004.avz",
+            "size": 378564,
+            "compressed_size": 378564,
+            "crc32": "107DAFFC",
+            "sha256": "305d5c4a54cb01267faeac7c77cbe64a5fa9ccf57f2ac8a55cf5af5b6573ed9a"
+          },
+          {
+            "path": "exc.avz",
+            "size": 791,
+            "compressed_size": 791,
+            "crc32": "88141170",
+            "sha256": "856202fe3f802c52a6c18c1a0c7fe2fcc84a55ca00daae1a84843d8243a1747a"
+          },
+          {
+            "path": "signf003.avz",
+            "size": 385699,
+            "compressed_size": 385699,
+            "crc32": "B5D39966",
+            "sha256": "643f1b91f3c908b3ac8996c72104d92979bdf0c95d0157da80243f5271298084"
+          },
+          {
+            "path": "neuralm.avz",
+            "size": 3749,
+            "compressed_size": 3749,
+            "crc32": "3613D787",
+            "sha256": "e379fb3a332222eccf8c71947e7f03e1289c9e52a7f1d71cf820ab8e1cac199e"
+          },
+          {
+            "path": "main003.avz",
+            "size": 152611,
+            "compressed_size": 152611,
+            "crc32": "54E71B67",
+            "sha256": "ca4858211dcea864502e861a400948a45c84d1da9ebdea341cc7c3dbadb0d716"
+          },
+          {
+            "path": "main004.avz",
+            "size": 74214,
+            "compressed_size": 74214,
+            "crc32": "3025C66E",
+            "sha256": "7d2b248388d3b1fbff5bd14f014be06aca3090b0ea4f931c9b8d9c349bf3a1dd"
+          },
+          {
+            "path": "neurald.avz",
+            "size": 325,
+            "compressed_size": 325,
+            "crc32": "3034E3C0",
+            "sha256": "c0fc88151f25420377df134c72dda4495a8907984525596f54472159f2de8568"
+          },
+          {
+            "path": "ports.avz",
+            "size": 3945,
+            "compressed_size": 3945,
+            "crc32": "A8AC724F",
+            "sha256": "67bf8419be6f378b31c8ada1479f89d8c522e0380a1bbea2033d05bacd90667d"
+          },
+          {
+            "path": "main015.avz",
+            "size": 121669,
+            "compressed_size": 121669,
+            "crc32": "E7918888",
+            "sha256": "0776ee68190c7cd8e8450198c9ae98a10fac1691f588c1fdca9fe806ba4e876a"
+          },
+          {
+            "path": "main012.avz",
+            "size": 141852,
+            "compressed_size": 141852,
+            "crc32": "38FB1B86",
+            "sha256": "685d1cd97ea278b01d199eec5c8f1c15eb831c0c15315ce60feaa1fbf4729bb0"
+          },
+          {
+            "path": "main027.avz",
+            "size": 145511,
+            "compressed_size": 145511,
+            "crc32": "6649C1A4",
+            "sha256": "504f0cd3f82f12023922656641b98eae1222b070ae4de9b556342ba24cdfd42e"
+          },
+          {
+            "path": "main020.avz",
+            "size": 160919,
+            "compressed_size": 160919,
+            "crc32": "EACD9D79",
+            "sha256": "0495b0ea08b542e6bdcccf59a27788f32ceba611ef1a5e6c67bad41d66050d8e"
+          },
+          {
+            "path": "signf012.avz",
+            "size": 462708,
+            "compressed_size": 462708,
+            "crc32": "2002FE3A",
+            "sha256": "858f15306a1cb4845ec1a9c98a98daf139d2ac83e97990253599a096b462565c"
+          },
+          {
+            "path": "bt.avz",
+            "size": 3198,
+            "compressed_size": 3198,
+            "crc32": "2E4188BE",
+            "sha256": "f6f9ceddf2386ad840afe7910565b67733bee270d43ac12404de127eb35ef2e6"
+          },
+          {
+            "path": "main029.avz",
+            "size": 126783,
+            "compressed_size": 126783,
+            "crc32": "A4F997DB",
+            "sha256": "60d9e6f1bcaaaa30f0d8855ff7b9bf5faa68465941b097a87bdaf59ed53886d2"
+          },
+          {
+            "path": "lang_en.avz",
+            "size": 26519,
+            "compressed_size": 26519,
+            "crc32": "0C9FD835",
+            "sha256": "1e719146f6693777e94199e39902b63d5b28774cb0e40349c3762b354df4894e"
+          },
+          {
+            "path": "signf015.avz",
+            "size": 347801,
+            "compressed_size": 347801,
+            "crc32": "8ED1DC75",
+            "sha256": "b5ae6abe77d7d5754d56ea9a434d01daab6bd3304b188601439030fef2845c6b"
+          },
+          {
+            "path": "net.avz",
+            "size": 1768,
+            "compressed_size": 1768,
+            "crc32": "FFE3BF8F",
+            "sha256": "6cd95f3366cc451131de8808ec67154803445f6948c2830a8f10f0addcf8bcd9"
+          },
+          {
+            "path": "neurale.avz",
+            "size": 804,
+            "compressed_size": 804,
+            "crc32": "DA77687C",
+            "sha256": "fcd5812279231c3426d5634b2f5c5f430b7bae7d96b0b29a720987d401b6c5d8"
+          },
+          {
+            "path": "main005.avz",
+            "size": 133964,
+            "compressed_size": 133964,
+            "crc32": "362C51DC",
+            "sha256": "ecbb66777dc05c935f2e5ccb34f7c832f4d96e1de16d27d09d470644aa67c7f9"
+          },
+          {
+            "path": "main002.avz",
+            "size": 171644,
+            "compressed_size": 171644,
+            "crc32": "AC886DF5",
+            "sha256": "1dc7f73fac55db32552d028a31512be709052133e403ea8c189eb594e2ec49ce"
+          },
+          {
+            "path": "signf002.avz",
+            "size": 383668,
+            "compressed_size": 383668,
+            "crc32": "DB87D05D",
+            "sha256": "30ce06da298afb1ad933cbf17a1eab15e2506ddd9a0f2cf92fb1a4e3a6af25aa"
+          },
+          {
+            "path": "signf005.avz",
+            "size": 387123,
+            "compressed_size": 387123,
+            "crc32": "3A54F77D",
+            "sha256": "26ba6db7348bea83b93f7a40e9d7b3147b091db1fc4e1ff47b7f0fe1be8b4d65"
+          },
+          {
+            "path": "main028.avz",
+            "size": 149328,
+            "compressed_size": 149328,
+            "crc32": "84FE34AD",
+            "sha256": "a57f556f41722e105263d24378561209d318819c32fa19fff7681feb38c4464e"
+          },
+          {
+            "path": "signf014.avz",
+            "size": 421434,
+            "compressed_size": 421434,
+            "crc32": "9CE897F4",
+            "sha256": "4db84dd0c9ced1105c069e6711761cae657f87426ad93e73b4081135153b5bc0"
+          },
+          {
+            "path": "signf013.avz",
+            "size": 396788,
+            "compressed_size": 396788,
+            "crc32": "3CADA923",
+            "sha256": "6c9fd999ccee39959542059e7375e4227f19b64705dc2c2ff65889b95608abfc"
+          },
+          {
+            "path": "main021.avz",
+            "size": 157053,
+            "compressed_size": 157053,
+            "crc32": "0D566636",
+            "sha256": "45d1d8ac9a3ee419309270c780ae911eadec04f3c0b80bd0ce5274ff286dc903"
+          },
+          {
+            "path": "main026.avz",
+            "size": 147753,
+            "compressed_size": 147753,
+            "crc32": "BED3BCFE",
+            "sha256": "36f7c02790baf3cf642a541ad669a6a17a74e0b63d2ec34183b42cdd58dfcf17"
+          },
+          {
+            "path": "main013.avz",
+            "size": 129388,
+            "compressed_size": 129388,
+            "crc32": "D85544E2",
+            "sha256": "71a9a47f0b067343f831da05dc9f06e6394646e5a757e399ca2df800ce302963"
+          },
+          {
+            "path": "prt.avz",
+            "size": 8594,
+            "compressed_size": 8594,
+            "crc32": "A1F58586",
+            "sha256": "00068d8f44c67759d590acf39bd8fec6c4df3d3dabb5410758d497b41465488d"
+          },
+          {
+            "path": "main014.avz",
+            "size": 116129,
+            "compressed_size": 116129,
+            "crc32": "B757706D",
+            "sha256": "1991d75f99b339ced0a1f46934ca43ee1181c67e3513cb62a2b4515f77f1b8a4"
+          },
+          {
+            "path": "syscheck.avz",
+            "size": 215917,
+            "compressed_size": 215917,
+            "crc32": "C20BA4E5",
+            "sha256": "547a7f43ace994e5ba80cb66be97d5df782320d0f71d20e0696d517753131483"
+          },
+          {
+            "path": "tsw.avz",
+            "size": 13339,
+            "compressed_size": 13339,
+            "crc32": "03E4A8FE",
+            "sha256": "068759ccbd4c7612c6097974fd4c9944f132b117edf2241ba26b1b827a090c43"
+          },
+          {
+            "path": "main.avz",
+            "size": 134422,
+            "compressed_size": 134422,
+            "crc32": "B289220E",
+            "sha256": "d1111dd66fd587669d106dfb2c11803b247bff03f02b4f76a776d8669641c596"
+          },
+          {
+            "path": "scu.avz",
+            "size": 7892,
+            "compressed_size": 7892,
+            "crc32": "035EE92C",
+            "sha256": "7646404a4946a9da673a9123e31d1741c7d9b3141666df7e6d30eb874e797909"
+          },
+          {
+            "path": "signf010.avz",
+            "size": 480260,
+            "compressed_size": 480260,
+            "crc32": "2813A360",
+            "sha256": "1a3f3d098ee1adf76d6a0305e1ba727dcfec3a160c700238744f6c59711cb45b"
+          },
+          {
+            "path": "signf017.avz",
+            "size": 557760,
+            "compressed_size": 557760,
+            "crc32": "0B0E42C9",
+            "sha256": "fdb5f5f66d96eecb117072004fda0d55362ceb79574fb8661efa094596e6d34c"
+          },
+          {
+            "path": "main025.avz",
+            "size": 119091,
+            "compressed_size": 119091,
+            "crc32": "82CAC55A",
+            "sha256": "89e328e431d34773396327fd398d8f6ca027e1ccb7472d94b6f4267b34907c81"
+          },
+          {
+            "path": "vse_ru.avz",
+            "size": 7806,
+            "compressed_size": 7806,
+            "crc32": "A080B3AF",
+            "sha256": "968e4b2c481cb16fb79da6e319dcee6bbfb5324bc3c028fe26590dfdc576550d"
+          },
+          {
+            "path": "main022.avz",
+            "size": 142397,
+            "compressed_size": 142397,
+            "crc32": "63CA9A51",
+            "sha256": "a3a18ac0dc65b910f4424f73679d2007b63d7a1b63356f71fce47bd77a88b213"
+          },
+          {
+            "path": "esc.avz",
+            "size": 570,
+            "compressed_size": 570,
+            "crc32": "2BEA40A7",
+            "sha256": "fb7a00b74be287410f5cb5f0e118e048f8bea5a8f8bc00fe1c30700abe0f2154"
+          },
+          {
+            "path": "scripts.avz",
+            "size": 1813,
+            "compressed_size": 1813,
+            "crc32": "BCA04573",
+            "sha256": "daccc0def23ecef1f3c3b3571e8e71ee0123949e2166d3af8794d03af71735a8"
+          },
+          {
+            "path": "main017.avz",
+            "size": 147739,
+            "compressed_size": 147739,
+            "crc32": "736F75B5",
+            "sha256": "fea0ec1622f87397aec1c64df29a1e565c2304640d7189b62c48dfbe3d0e856d"
+          },
+          {
+            "path": "main010.avz",
+            "size": 147084,
+            "compressed_size": 147084,
+            "crc32": "B8D2603D",
+            "sha256": "6870ebb5944653e9d91b3dca8f9c538941d9def3180053fa17ed153730fb7699"
+          },
+          {
+            "path": "signfusr.avz",
+            "size": 376420,
+            "compressed_size": 376420,
+            "crc32": "CB2EF9BB",
+            "sha256": "a7fe9e90ef6418bd536e797a9e0ea8e36665d3a95b489bb36949843050042de4"
+          },
+          {
+            "path": "sysipu.avz",
+            "size": 1817,
+            "compressed_size": 1817,
+            "crc32": "E1E1EABA",
+            "sha256": "679254b75110c1e785e9a35730e32a096cafee31dd885209f4e6df452846a3d8"
+          },
+          {
+            "path": "main019.avz",
+            "size": 152312,
+            "compressed_size": 152312,
+            "crc32": "1A93FE8F",
+            "sha256": "188ef6c892cd6825ff2c4bf677ed89abb036ce786369214791c3e611a020f575"
+          },
+          {
+            "path": "repair.avz",
+            "size": 8414,
+            "compressed_size": 8414,
+            "crc32": "93373647",
+            "sha256": "0602c3f802b1e2228b6ba512b5a35557e3d594a78f74e32e0a5920ad9c008146"
+          },
+          {
+            "path": "krnldrv.avz",
+            "size": 15081,
+            "compressed_size": 15081,
+            "crc32": "4AEC9681",
+            "sha256": "b55e85167e8eddb1385775c231e2cfd5aaf0e5fb1fb86136729ecf2f79eaedff"
+          },
+          {
+            "path": "main008.avz",
+            "size": 131446,
+            "compressed_size": 131446,
+            "crc32": "B7BDE5D9",
+            "sha256": "a3f4330d1f410bd8f225aaadbba23fea194bae42a62e5347e344da4be5c050d6"
+          },
+          {
+            "path": "update.avz",
+            "size": 89,
+            "compressed_size": 89,
+            "crc32": "6E4C50EF",
+            "sha256": "6ff819c46f71319ff5e236713f0e1722dd9ce5f8db296f1fba5e2189513b964b"
+          },
+          {
+            "path": "main001.avz",
+            "size": 148078,
+            "compressed_size": 148078,
+            "crc32": "E81654CE",
+            "sha256": "b266ff8ecf2ef5606eb8fd01b70623ea6dc05add587f1e32e44cda8fb68cb561"
+          },
+          {
+            "path": "main006.avz",
+            "size": 143000,
+            "compressed_size": 143000,
+            "crc32": "A4713870",
+            "sha256": "a75d91d9b4b4249e5354dbbc5f027b147674cfa3b8a82f2219144ec94823c161"
+          },
+          {
+            "path": "signf008.avz",
+            "size": 394291,
+            "compressed_size": 394291,
+            "crc32": "BDDC6C38",
+            "sha256": "829a7df388e58380caea836441964cac2d26b961bdeeab92e3c360fa213df50e"
+          },
+          {
+            "path": "backup.avz",
+            "size": 925,
+            "compressed_size": 925,
+            "crc32": "6038A479",
+            "sha256": "6bb48309561de7ef9ec0d5933bbe6df4917006050608229e15a47ddb497cc5d4"
+          },
+          {
+            "path": "signf006.avz",
+            "size": 390589,
+            "compressed_size": 390589,
+            "crc32": "237428E2",
+            "sha256": "caf6caa48b2fb7b0f0354830f1543abd93887bfae5d342d9fffbcc110dad2910"
+          },
+          {
+            "path": "signf001.avz",
+            "size": 381808,
+            "compressed_size": 381808,
+            "crc32": "FCDD99FB",
+            "sha256": "45e62534e88bd48e96e6cfea53f20e9990723b769f568f58dfcf69cc8024e406"
+          },
+          {
+            "path": "main018.avz",
+            "size": 150896,
+            "compressed_size": 150896,
+            "crc32": "627706CF",
+            "sha256": "e0874e2b18cd5d1406e7d29f0642f82a05b96528d639ec9c79db8152923ff8b6"
+          },
+          {
+            "path": "lang_ru.avz",
+            "size": 29560,
+            "compressed_size": 29560,
+            "crc32": "DDB9D709",
+            "sha256": "0bd2962a265bc15637d2ed3fd151f73bf0d2e03125f7033d3e4575da4a774c52"
+          },
+          {
+            "path": "main011.avz",
+            "size": 142304,
+            "compressed_size": 142304,
+            "crc32": "A0FA0937",
+            "sha256": "95c09717862a76a1e875ec56e684add1b0a75a5b8955d81b41d51c4c004547a5"
+          },
+          {
+            "path": "main016.avz",
+            "size": 107395,
+            "compressed_size": 107395,
+            "crc32": "C06D646A",
+            "sha256": "f236729615afe176617b1547c1733120acfc218aca89fecaf83bd3544fb5e169"
+          },
+          {
+            "path": "main023.avz",
+            "size": 120638,
+            "compressed_size": 120638,
+            "crc32": "CB8F2D05",
+            "sha256": "ec63213aeb6e62017d3d79511189622765f37eb8f872ebf234f6119896074f23"
+          },
+          {
+            "path": "main024.avz",
+            "size": 154694,
+            "compressed_size": 154694,
+            "crc32": "456B4770",
+            "sha256": "8b87e52347e121e423f989ce221a081c90e0b205c9a63cee49d3a01f9446e695"
+          },
+          {
+            "path": "rootkit.avz",
+            "size": 4262,
+            "compressed_size": 4262,
+            "crc32": "8F1F564B",
+            "sha256": "97806e3883d4c607261b10316b7bdf96578aa2da3e9f450a9cb62ac384a1991f"
+          },
+          {
+            "path": "signf018.avz",
+            "size": 433260,
+            "compressed_size": 433260,
+            "crc32": "DA65E4CE",
+            "sha256": "6d2e82d0347e555f1b6f5a8ff6ca0d2e4b9276ebbc8e4e24f41fc3329babafc3"
+          },
+          {
+            "path": "signf016.avz",
+            "size": 502168,
+            "compressed_size": 502168,
+            "crc32": "DDD93673",
+            "sha256": "ea91627b100515a0f85357585666b606c71c3368e7e4a923f91541a56140ba4f"
+          },
+          {
+            "path": "signf011.avz",
+            "size": 458783,
+            "compressed_size": 458783,
+            "crc32": "AE011CA6",
+            "sha256": "2cb6cecd8a16dc14696d459e20936c5e59d1c9e56b68f408e37609479d9b50d3"
+          },
+          {
+            "path": "keylogger.avz",
+            "size": 509,
+            "compressed_size": 509,
+            "crc32": "BFFD8B8E",
+            "sha256": "cd721c9b06558795799a62dea6d657ce2b1bb1b1ee9bf5358887ea5d7af6446e"
+          },
+          {
+            "path": "par.avz",
+            "size": 1074,
+            "compressed_size": 1074,
+            "crc32": "0FC3217F",
+            "sha256": "d59f2cf9875a2504a6c7322c1d907ee9c0daadc735e98e39a193fbe61f7f0aa2"
+          },
+          {
+            "path": "signf007.avz",
+            "size": 392176,
+            "compressed_size": 392176,
+            "crc32": "106C4449",
+            "sha256": "4419bbfb3f194d3e939e18a40105328d09ca5d2a684f14f57527d34878ffba2f"
+          },
+          {
+            "path": "neural.avz",
+            "size": 7499,
+            "compressed_size": 7499,
+            "crc32": "2E7B1343",
+            "sha256": "dfacc05c46d82251fcadeba7da9d1de2b516fa170a615dec3959293e157f8298"
+          },
+          {
+            "path": "signf009.avz",
+            "size": 477321,
+            "compressed_size": 477321,
+            "crc32": "D3AF1B38",
+            "sha256": "9198df12cdf242a3ea71a1eb5e0623e338cfbfacaf05b52c84de6c1e9d8bf292"
+          },
+          {
+            "path": "extract.avz",
+            "size": 149677,
+            "compressed_size": 149677,
+            "crc32": "532B3F60",
+            "sha256": "2e18ea5c2cbcb89b79491c4ad6f4e27c1adc3bad73a57825faf4d9c7068be115"
+          },
+          {
+            "path": "tsw-auto.avz",
+            "size": 12134,
+            "compressed_size": 12134,
+            "crc32": "F28B41DF",
+            "sha256": "6d21de15e8a439747cc9cbec8c159a9e64f1f8af0b1a9f7a5ccaa5ff3340f182"
+          },
+          {
+            "path": "managers.avz",
+            "size": 1031,
+            "compressed_size": 1031,
+            "crc32": "DDFCFD9D",
+            "sha256": "a24a54ffaaf8e04555dea71091cecb3f1a08d9614711e88008e7c8ad18358849"
+          },
+          {
+            "path": "main007.avz",
+            "size": 148675,
+            "compressed_size": 148675,
+            "crc32": "FC3CAE67",
+            "sha256": "3bbf31d94edf2ea49628e8371da60cb57f6138c9527af137feeb4f6d3773e858"
+          },
+          {
+            "path": "main009.avz",
+            "size": 147861,
+            "compressed_size": 147861,
+            "crc32": "D43DBA3F",
+            "sha256": "f340c16fa8010010916f231aa72fd1ee3354cc548b1322ff935db51c9b7c2ff6"
+          }
+        ]
+      },
+      "retrieval_method": "operator_supplied_candidate",
+      "last_modified_utc": "",
+      "retrieved_at_utc": "2026-07-16T13:49:52+00:00"
+    }
+  ]
+}

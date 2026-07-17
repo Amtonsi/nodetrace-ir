@@ -1,0 +1,9 @@
+AVZ version 5.0.2
+Database date: 2026-07-15
+Removal mode: disabled
+C:\Users\Analyst\Downloads\invoice.exe >>> обнаружен Trojan.Test.Sample
+C:\Users\Analyst\AppData\Local\Temp\helper.dll >>> подозрение на HEUR:Suspicious.Loader
+Process: PID=4120; PPID=932; Image=C:\Users\Analyst\Downloads\invoice.exe; CommandLine="C:\Users\Analyst\Downloads\invoice.exe" /silent; User=DESKTOP\Analyst
+Service: Name=ExampleUpdater; ImagePath=C:\ProgramData\Example\updater.exe -service; StartType=Auto; State=Running
+Autorun: Location=HKCU\Software\Microsoft\Windows\CurrentVersion\Run; Name=ExampleUpdate; Command="C:\ProgramData\Example\updater.exe" --background
+TCP: PID=4120; Local=192.0.2.10:51822; Remote=203.0.113.25:443; State=Established

@@ -1,0 +1,31 @@
+AVZ THIRD-PARTY NOTICE
+======================
+
+AVZ is third-party software by its respective author/rightsholder. NodeTrace IR
+is an independent project and is not affiliated with, sponsored by, or endorsed
+by the AVZ author or z-oleg.com.
+
+Official project page:
+  https://z-oleg.com/secur/avz/
+
+Official download page:
+  https://z-oleg.com/secur/avz/download.php
+
+This media contains avz4.zip and avzbase.zip as byte-for-byte unchanged ZIP
+archives downloaded from the official URLs pinned in AVZ_MANIFEST.json. The AVZ
+files are not covered by the NodeTrace IR Apache-2.0 license. Their copyright,
+license and permitted-use conditions remain those supplied by the AVZ
+rightsholder. Review the official terms and the documentation contained in the
+AVZ distribution before use.
+
+The build tools require the explicit -AcceptNonCommercialLicense switch. That
+switch records the operator's acknowledgement; it does not grant additional
+rights. Do not build or use an AVZ-containing image unless your intended use is
+authorized. Obtain separate permission from the rightsholder where required,
+including for commercial distribution or use.
+
+NodeTrace IR uses AVZ only for an explicitly confirmed diagnostic/read-only
+scan. The integration does not authorize automatic treatment, deletion,
+quarantine, registry repair, persistence removal, reboot, or any other
+remediation. No AVZ binary archive is stored in the NodeTrace IR source tree;
+the operator fetches pinned archives directly from the official host.

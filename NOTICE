@@ -1,0 +1,35 @@
+NodeTrace IR
+Copyright 2026 NodeTrace IR contributors
+
+This product is licensed under the Apache License, Version 2.0.
+
+The graph-and-timeline investigation UX concept was inspired by publicly
+described ideas associated with Flowsint. NodeTrace IR is an independent
+implementation. It does not include or depend on Flowsint software, source
+code, visual assets, datasets, or services. The Flowsint name remains the
+property of its respective owner; this attribution does not imply endorsement,
+sponsorship, affiliation, or compatibility.
+
+Third-party optional component: AVZ Antivirus Toolkit
+
+AVZ is software by Oleg Zaytsev and is governed by its own license, not by the
+Apache License 2.0 used for NodeTrace IR. AVZ executables, databases, and ZIP
+archives are not part of the NodeTrace IR source distribution. Official project
+information and downloads are published at https://z-oleg.com/secur/avz/ .
+
+An optional bootable x86 WinPE ISO may contain only verified official AVZ
+runtime and database files derived from archives pinned by the build manifest,
+after the builder explicitly accepts the applicable noncommercial-use terms.
+AVZ is never included in the Apache-2.0 source archive. Corporate or commercial
+distribution or use of a toolkit containing AVZ may require prior written
+permission from the AVZ rights holder. Do not infer permission from the
+NodeTrace IR license or from a successful build.
+
+Third-party platform component: Microsoft Windows Preinstallation Environment
+
+The NodeTrace IR source distribution contains build and verification automation
+but no Microsoft WinPE binary, WIM, CAB, MSI, or ADK payload. An optional
+bootable ISO may be assembled only from official Microsoft ADK/WinPE inputs by
+a builder who has accepted the applicable Microsoft license. Those Microsoft
+components remain governed by their own terms and are not licensed under the
+NodeTrace IR Apache License 2.0.

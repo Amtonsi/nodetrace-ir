@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AVZReport version="5.0.2" generated="2026-07-15T08:30:00+08:00" removalMode="disabled">
+  <Database date="2026-07-15" records="123456" />
+  <Detections>
+    <Detection path="C:\Users\Analyst\Downloads\invoice.exe" threat="Trojan.Test.Sample" verdict="detected" sha256="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+    <SuspiciousFile path="C:\Users\Analyst\AppData\Local\Temp\helper.dll" threat="HEUR:Suspicious.Loader" verdict="heuristic suspicion" />
+  </Detections>
+  <Processes>
+    <Process pid="4120" ppid="932" name="invoice.exe" image="C:\Users\Analyst\Downloads\invoice.exe" commandLine="&quot;C:\Users\Analyst\Downloads\invoice.exe&quot; /silent" user="DESKTOP\Analyst" />
+  </Processes>
+  <Files>
+    <File path="C:\Users\Analyst\AppData\Local\Temp\stage.dat" size="2048" sha256="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb" />
+  </Files>
+  <Services>
+    <Service name="ExampleUpdater" displayName="Example Update Service" imagePath="C:\ProgramData\Example\updater.exe -service" startType="Auto" state="Running" />
+  </Services>
+  <Autoruns>
+    <Item location="HKCU\Software\Microsoft\Windows\CurrentVersion\Run" name="ExampleUpdate" command="&quot;C:\ProgramData\Example\updater.exe&quot; --background" />
+  </Autoruns>
+  <Connections>
+    <Connection protocol="tcp" pid="4120" localAddress="192.0.2.10" localPort="51822" remoteAddress="203.0.113.25" remotePort="443" state="Established" />
+  </Connections>
+</AVZReport>
