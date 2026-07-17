@@ -1154,7 +1154,19 @@ try {
         efi_el_torito_source = $efiBootSource
         built_utc = [DateTime]::UtcNow.ToString("o")
         source_date_epoch = $SourceDateEpoch
+        iso_filesystem = "UDF 1.02 with ISO9660 8.3 bridge"
         expected_iso_paths = $expectedIsoPaths
+        expected_iso9660_bridge_paths = $expectedIsoPaths
+        staged_udf_paths = @(
+            "bootmgr",
+            "Boot/BCD",
+            "Boot/boot.sdi",
+            "EFI/Boot/bootia32.efi",
+            "EFI/Microsoft/Boot/BCD",
+            "sources/boot.wim",
+            "NodeTraceBoot/etfsboot.com",
+            "NodeTraceBoot/efisys.bin"
+        )
         hashes = [ordered]@{
             iso_sha256 = $isoHash
             boot_wim_sha256 = (Get-FileHash -LiteralPath $stagedWim -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -1171,10 +1183,18 @@ try {
             bios_boot_image_sha256 = $biosBootHash
             efi_fat_image_sha256 = (Get-FileHash -LiteralPath $stagedEfiImage -Algorithm SHA256).Hash.ToLowerInvariant()
             wimlib_imagex_sha256 = $wimlibHash
+            oscdimg_sha256 = $oscdimgHash
         }
         tools = [ordered]@{
             wimlib = $wimlibVersion
-            iso_builder = "scripts/build_iso.py"
+            iso_builder = [ordered]@{
+                name = "oscdimg.exe"
+                version = $oscdimgVersion
+                sha256 = $oscdimgHash
+                provenance = "Tools/oscdimg.exe in the verified WinPE extraction manifest"
+                udf_version = "1.02"
+                iso9660_bridge = "8.3"
+            }
             iso_verifier = "scripts/verify_bootable_iso.py"
             efi_image_builder = "scripts/build_fat12_efi.py"
         }
